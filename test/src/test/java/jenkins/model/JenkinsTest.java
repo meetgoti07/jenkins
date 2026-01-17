@@ -165,7 +165,7 @@ public class JenkinsTest {
                 assertNotNull(paneId, "Collapse link should have data-post-href");
 
                 HtmlElementUtil.click(collapseLink);
-    
+
                 wc.waitForBackgroundJavaScript(500);
 
                 HtmlPage currentPage = (HtmlPage) wc.getCurrentWindow().getEnclosedPage();

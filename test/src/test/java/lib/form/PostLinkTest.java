@@ -106,30 +106,22 @@ public class PostLinkTest {
         HtmlAnchor link = page.getAnchorByText("Rapid Click Test");
         assertNotNull(link, "POST link should be present");
 
-        // Reset counter
         rapidClickAction.reset();
 
         // Click multiple times rapidly to simulate race condition
-        // Note: HtmlUnit may not handle rapid clicks the same way as a real browser,
-        // but this tests that handlers are attached correctly
         for (int i = 0; i < 3; i++) {
             try {
-                // Reload page to get fresh link
                 page = wc.goTo(rapidClickAction.getUrlName());
                 wc.waitForBackgroundJavaScript(500);
                 link = page.getAnchorByText("Rapid Click Test");
                 HtmlElementUtil.click(link);
-                // Small delay
                 Thread.sleep(50);
             } catch (Exception e) {
-                // Ignore navigation exceptions
             }
         }
 
-        // Wait for all requests to complete
         Thread.sleep(500);
 
-        // Verify POST was called (may be called multiple times, but should all be POST)
         assertTrue(rapidClickAction.getCallCount() > 0, "POST action should have been called");
         assertFalse(rapidClickAction.wasGetRequest(), "Should not have any GET requests");
     }

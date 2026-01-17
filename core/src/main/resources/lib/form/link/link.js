@@ -5,18 +5,14 @@ Behaviour.specify("A.post", "link.post", 0, function (element) {
     element.removeAttribute("data-post-href");
   }
 
-  // Use addEventListener for robust event handling (allows multiple listeners, less prone to overwriting)
-  // Check if we already attached a listener (avoid duplicates)
   if (element._postLinkHandlerAttached) {
     return;
   }
 
-  // Remove any existing onclick to avoid conflicts
   if (element.onclick) {
     element.onclick = null;
   }
 
-  // Create handler function
   var postHandler = function (ev) {
     if (ev) {
       ev.preventDefault();
@@ -31,6 +27,6 @@ Behaviour.specify("A.post", "link.post", 0, function (element) {
     return false;
   };
 
-  element.addEventListener("click", postHandler, true); // Use capture phase to ensure we handle it early
-  element._postLinkHandlerAttached = true; // Mark as attached
+  element.addEventListener("click", postHandler, true);
+  element._postLinkHandlerAttached = true;
 });
